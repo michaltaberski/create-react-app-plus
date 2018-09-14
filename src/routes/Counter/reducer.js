@@ -1,5 +1,6 @@
 import { createAction } from 'redux-actions';
 import buildImmerReducer from 'utils/buildImmerReducer';
+import noop from 'lodash/noop';
 import sleep from 'utils/sleep';
 
 export const REDUCER_NAME = 'counter';
@@ -16,31 +17,31 @@ const initialState = {
 };
 
 export default buildImmerReducer(initialState, {
-  [INCREMENT_REQUESTED]: (state) => {
+  [INCREMENT_REQUESTED]: state => {
     state.isIncrementing = true;
   },
-  [INCREMENT]: (state) => {
+  [INCREMENT]: state => {
     state.count += 1;
     state.isIncrementing = false;
   },
-  [DECREMENT_REQUESTED]: (state) => {
+  [DECREMENT_REQUESTED]: state => {
     state.isDecrementing = true;
   },
-  [DECREMENT]: (state) => {
+  [DECREMENT]: state => {
     state.count -= 1;
     state.isDecrementing = false;
   },
-  [RESET]: () => initialState,
+  [RESET]: () => initialState
 });
 
-export const reset = createAction(RESET);
-export const increment = createAction(INCREMENT);
-export const decrement = createAction(DECREMENT);
-export const incrementRequested = createAction(INCREMENT_REQUESTED);
-export const decrementRequested = createAction(DECREMENT_REQUESTED);
+export const reset = createAction(RESET, noop);
+export const increment = createAction(INCREMENT, noop);
+export const decrement = createAction(DECREMENT, noop);
+export const incrementRequested = createAction(INCREMENT_REQUESTED, noop);
+export const decrementRequested = createAction(DECREMENT_REQUESTED, noop);
 
 export const incrementAsync = () => {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch(incrementRequested());
     await sleep(500);
     dispatch(increment());
@@ -48,7 +49,7 @@ export const incrementAsync = () => {
 };
 
 export const decrementAsync = () => {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch(decrementRequested());
     await sleep(500);
     dispatch(decrement());

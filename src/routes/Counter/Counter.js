@@ -21,9 +21,7 @@ const Counter = props => (
     <p>Count: {props.count}</p>
 
     <p>
-      <button onClick={props.reset}>
-        RESET
-      </button>
+      <button onClick={props.reset}>RESET</button>
     </p>
     <p>
       <button onClick={props.increment}>Increment</button>
@@ -40,17 +38,15 @@ const Counter = props => (
     </p>
 
     <p>
-      <button onClick={() => props.push('/')}>
-        Go to Home via redux
-      </button>
+      <button onClick={() => props.push('/')}>Go to Home via redux</button>
     </p>
   </div>
 );
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   count: selectors.counterValueSelector(state),
   isIncrementing: selectors.counterIsIncrementingSelector(state),
-  isDecrementing: selectors.counterIsDecrementingSelector(state),
+  isDecrementing: selectors.counterIsDecrementingSelector(state)
 });
 
 const enhance = compose(
