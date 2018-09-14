@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withReducer } from 'utils/withReducer';
 import { compose } from 'recompose';
 import reducer, {
+  reset,
   increment,
   incrementAsync,
   decrement,
@@ -15,6 +16,11 @@ const Counter = props => (
     <h1>Counter</h1>
     <p>Count: {props.count}</p>
 
+    <p>
+      <button onClick={props.reset}>
+        RESET
+      </button>
+    </p>
     <p>
       <button onClick={props.increment}>Increment</button>
       <button onClick={props.incrementAsync} disabled={props.isIncrementing}>
@@ -48,6 +54,7 @@ const enhance = compose(
   connect(
     mapStateToProps,
     {
+      reset,
       increment,
       incrementAsync,
       decrement,

@@ -1,7 +1,10 @@
+import buildImmerReducer from 'utils/buildImmerReducer';
+
 export const INCREMENT_REQUESTED = 'counter/INCREMENT_REQUESTED';
 export const INCREMENT = 'counter/INCREMENT';
 export const DECREMENT_REQUESTED = 'counter/DECREMENT_REQUESTED';
 export const DECREMENT = 'counter/DECREMENT';
+export const RESET = 'counter/RESET';
 
 const initialState = {
   count: 0,
@@ -9,38 +12,27 @@ const initialState = {
   isDecrementing: false
 };
 
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case INCREMENT_REQUESTED:
-      return {
-        ...state,
-        isIncrementing: true
-      };
+export default buildImmerReducer(initialState, {
+  [INCREMENT_REQUESTED]: (state) => {
+    state.isIncrementing = true;
+  },
+  [INCREMENT]: (state) => {
+    state.count += 1;
+    state.isIncrementing = false;
+  },
+  [DECREMENT_REQUESTED]: (state) => {
+    state.isDecrementing = true;
+  },
+  [DECREMENT]: (state) => {
+    state.count -= 1;
+    state.isDecrementing = false;
+  },
+  [RESET]: () => initialState,
+});
 
-    case INCREMENT:
-      return {
-        ...state,
-        count: state.count + 1,
-        isIncrementing: !state.isIncrementing
-      };
-
-    case DECREMENT_REQUESTED:
-      return {
-        ...state,
-        isDecrementing: true
-      };
-
-    case DECREMENT:
-      return {
-        ...state,
-        count: state.count - 1,
-        isDecrementing: !state.isDecrementing
-      };
-
-    default:
-      return state;
-  }
-};
+export const reset = () => ({
+  type: RESET,
+});
 
 export const increment = () => {
   return dispatch => {
@@ -64,7 +56,7 @@ export const incrementAsync = () => {
       dispatch({
         type: INCREMENT
       });
-    }, 3000);
+    }, 1000);
   };
 };
 
@@ -90,6 +82,6 @@ export const decrementAsync = () => {
       dispatch({
         type: DECREMENT
       });
-    }, 3000);
+    }, 1000);
   };
 };
