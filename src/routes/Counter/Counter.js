@@ -3,8 +3,10 @@ import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { withReducer } from 'utils/withReducer';
 import { compose } from 'recompose';
+import { Helmet } from 'react-helmet';
 import * as selectors from './selectors';
 import reducer, {
+  REDUCER_NAME,
   reset,
   increment,
   incrementAsync,
@@ -14,6 +16,7 @@ import reducer, {
 
 const Counter = props => (
   <div>
+    <Helmet title="Counter" />
     <h1>Counter</h1>
     <p>Count: {props.count}</p>
 
@@ -37,8 +40,8 @@ const Counter = props => (
     </p>
 
     <p>
-      <button onClick={() => props.push('/about-fsd')}>
-        Go to about page via redux
+      <button onClick={() => props.push('/')}>
+        Go to Home via redux
       </button>
     </p>
   </div>
@@ -51,7 +54,7 @@ const mapStateToProps = (state) => ({
 });
 
 const enhance = compose(
-  withReducer('counter', reducer),
+  withReducer(REDUCER_NAME, reducer),
   connect(
     mapStateToProps,
     {

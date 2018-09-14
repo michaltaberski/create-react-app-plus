@@ -1,8 +1,4 @@
+import buildImmerReducer from 'utils/buildImmerReducer';
 const initialState = {};
 
-export default (state = initialState, action) => {
-  switch (action.type) {
-    default:
-      return state;
-  }
-};
+export default buildImmerReducer(initialState);

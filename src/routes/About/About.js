@@ -1,7 +1,5 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { withReducer } from 'utils/withReducer';
-import reducer from './reducer';
 
 const About = props => (
   <div>
@@ -11,4 +9,4 @@ const About = props => (
   </div>
 );
 
-export default withReducer('about', reducer)(About);
+export default About;

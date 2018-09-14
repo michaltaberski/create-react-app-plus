@@ -2,6 +2,7 @@ import { createAction } from 'redux-actions';
 import buildImmerReducer from 'utils/buildImmerReducer';
 import sleep from 'utils/sleep';
 
+export const REDUCER_NAME = 'counter';
 export const INCREMENT_REQUESTED = 'counter/INCREMENT_REQUESTED';
 export const INCREMENT = 'counter/INCREMENT';
 export const DECREMENT_REQUESTED = 'counter/DECREMENT_REQUESTED';
