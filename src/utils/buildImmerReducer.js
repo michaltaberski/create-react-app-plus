@@ -1,4 +1,4 @@
-import produce from 'immer'
+import produce from 'immer';
 
 const buildImmerReducer = (initialState, actionsReducers = {}) => {
   return produce((state, action) => {

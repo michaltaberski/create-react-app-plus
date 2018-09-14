@@ -14,7 +14,7 @@ render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <div>
-        <Helmet titleTemplate="MySite.com - %s" defaultTitle="MySite.com"/>
+        <Helmet titleTemplate="MySite.com - %s" defaultTitle="MySite.com" />
         <GlobalStyle />
         <App />
       </div>
