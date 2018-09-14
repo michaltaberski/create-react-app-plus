@@ -9,6 +9,8 @@
 - https://github.com/nfl/react-helmet (A document head manager for React)
 - https://github.com/mweststrate/immer (Immutable state helper)
 - https://github.com/redux-utilities/redux-actions (redux helper to reduce it's boilerplate)
+- https://github.com/acdlite/recompose (set of higher-order components utilities)
+- https://github.com/reduxjs/reselect (selector library for Redux)
 
 ## Before start
 - update `<title />` on `index.html`

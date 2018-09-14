@@ -3,6 +3,7 @@ import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { withReducer } from 'utils/withReducer';
 import { compose } from 'recompose';
+import * as selectors from './selectors';
 import reducer, {
   reset,
   increment,
@@ -43,10 +44,10 @@ const Counter = props => (
   </div>
 );
 
-const mapStateToProps = ({ counter }) => ({
-  count: counter.count,
-  isIncrementing: counter.isIncrementing,
-  isDecrementing: counter.isDecrementing
+const mapStateToProps = (state) => ({
+  count: selectors.counterValueSelector(state),
+  isIncrementing: selectors.counterIsIncrementingSelector(state),
+  isDecrementing: selectors.counterIsDecrementingSelector(state),
 });
 
 const enhance = compose(
