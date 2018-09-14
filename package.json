@@ -7,15 +7,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "surge": "yarn run build && cp ./build/index.html ./build/200.html && surge build -d cra-plus.surge.sh"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "prettier --write ./src/**/*.js"
-    }
+    "surge": "yarn run build && cp ./build/index.html ./build/200.html && surge build -d create-react-app-plus.surge.sh"
   },
   "devDependencies": {
-    "husky": "^1.0.0-rc.14",
     "prettier": "^1.14.2",
     "react-scripts": "1.1.5"
   },

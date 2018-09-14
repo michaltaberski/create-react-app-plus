@@ -17,3 +17,6 @@
 - update `<title />` on `index.html`
 - update `manifest.json`
 - update `favicon.ico`
+
+## DEMO
+http://create-react-app-plus.surge.sh
