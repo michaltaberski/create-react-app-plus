@@ -1,3 +1,4 @@
+import { createAction } from 'redux-actions';
 import buildImmerReducer from 'utils/buildImmerReducer';
 
 export const INCREMENT_REQUESTED = 'counter/INCREMENT_REQUESTED';
@@ -30,58 +31,27 @@ export default buildImmerReducer(initialState, {
   [RESET]: () => initialState,
 });
 
-export const reset = () => ({
-  type: RESET,
-});
-
-export const increment = () => {
-  return dispatch => {
-    dispatch({
-      type: INCREMENT_REQUESTED
-    });
-
-    dispatch({
-      type: INCREMENT
-    });
-  };
-};
+export const reset = createAction(RESET);
+export const increment = createAction(INCREMENT);
+export const decrement = createAction(DECREMENT);
+export const incrementRequested = createAction(INCREMENT_REQUESTED);
+export const decrementRequested = createAction(DECREMENT_REQUESTED);
 
 export const incrementAsync = () => {
   return dispatch => {
-    dispatch({
-      type: INCREMENT_REQUESTED
-    });
-
+    dispatch(incrementRequested());
     return setTimeout(() => {
-      dispatch({
-        type: INCREMENT
-      });
+      dispatch(increment());
     }, 1000);
-  };
-};
-
-export const decrement = () => {
-  return dispatch => {
-    dispatch({
-      type: DECREMENT_REQUESTED
-    });
-
-    dispatch({
-      type: DECREMENT
-    });
   };
 };
 
 export const decrementAsync = () => {
   return dispatch => {
-    dispatch({
-      type: DECREMENT_REQUESTED
-    });
+    dispatch(decrementRequested());
 
     return setTimeout(() => {
-      dispatch({
-        type: DECREMENT
-      });
+      dispatch(decrement());
     }, 1000);
   };
 };

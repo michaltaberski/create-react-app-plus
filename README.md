@@ -8,9 +8,9 @@
 ## Additional tools
 - https://github.com/nfl/react-helmet (A document head manager for React)
 - https://github.com/mweststrate/immer (Immutable state helper)
+- https://github.com/redux-utilities/redux-actions (redux helper to reduce it's boilerplate)
 
-## Start with
-
+## Before start
 - update `<title />` on `index.html`
 - update `manifest.json`
 - update `favicon.ico`
