@@ -1,5 +1,6 @@
 import { createAction } from 'redux-actions';
 import buildImmerReducer from 'utils/buildImmerReducer';
+import sleep from 'utils/sleep';
 
 export const INCREMENT_REQUESTED = 'counter/INCREMENT_REQUESTED';
 export const INCREMENT = 'counter/INCREMENT';
@@ -38,20 +39,17 @@ export const incrementRequested = createAction(INCREMENT_REQUESTED);
 export const decrementRequested = createAction(DECREMENT_REQUESTED);
 
 export const incrementAsync = () => {
-  return dispatch => {
+  return async (dispatch) => {
     dispatch(incrementRequested());
-    return setTimeout(() => {
-      dispatch(increment());
-    }, 1000);
+    await sleep(500);
+    dispatch(increment());
   };
 };
 
 export const decrementAsync = () => {
-  return dispatch => {
+  return async (dispatch) => {
     dispatch(decrementRequested());
-
-    return setTimeout(() => {
-      dispatch(decrement());
-    }, 1000);
+    await sleep(500);
+    dispatch(decrement());
   };
 };
