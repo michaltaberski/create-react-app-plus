@@ -14,14 +14,14 @@
   "devDependencies": {
     "@storybook/react": "^3.4.10",
     "prettier": "^1.14.2",
-    "react-scripts": "1.1.5"
+    "react-scripts": "2.0.3"
   },
   "dependencies": {
-    "connected-react-router": "4.4.1",
+    "connected-react-router": "4.5.0",
     "immer": "^1.6.0",
     "lodash": "^4.17.11",
-    "react": "16.5.1",
-    "react-dom": "16.5.1",
+    "react": "16.5.2",
+    "react-dom": "16.5.2",
     "react-helmet": "^5.2.0",
     "react-loadable": "^5.5.0",
     "react-redux": "5.0.7",
@@ -31,9 +31,9 @@
     "redux": "4.0.0",
     "redux-actions": "^2.6.1",
     "redux-thunk": "2.3.0",
-    "reselect": "^3.0.1",
+    "reselect": "^4.0.0",
     "sanitize.css": "7.0.3",
-    "serve": "10.0.1",
+    "serve": "10.0.2",
     "styled-components": "^4.0.0-beta.3"
   }
 }
