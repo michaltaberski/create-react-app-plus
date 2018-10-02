@@ -5,6 +5,7 @@ import { withReducer } from 'utils/withReducer';
 import { compose } from 'recompose';
 import { Helmet } from 'react-helmet';
 import * as selectors from './selectors';
+import epic from './epic';
 import reducer, {
   REDUCER_NAME,
   reset,
@@ -50,7 +51,7 @@ const mapStateToProps = state => ({
 });
 
 const enhance = compose(
-  withReducer(REDUCER_NAME, reducer),
+  withReducer(REDUCER_NAME, reducer, epic),
   connect(
     mapStateToProps,
     {
