@@ -38,14 +38,16 @@ export const connectRx = (mapStateToProps = state => state) => {
   return WrappedComponent => {
     return class extends React.Component {
       componentDidMount() {
-        store$.subscribe(state => {
-          console.log('state: ', state);
+        this.subscriber = store$.subscribe(state => {
           this.setState(mapStateToProps(state));
         });
       }
 
+      componentWillUnmount() {
+        this.subscriber.unsubscribe();
+      }
+
       render() {
-        console.log('state: ', this.state);
         return <WrappedComponent {...this.props} {...this.state} />;
       }
     };
