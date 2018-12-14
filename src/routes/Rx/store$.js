@@ -1,15 +1,22 @@
 import { startWith, scan, shareReplay } from 'rxjs/operators';
-import reducer, { initState } from './reducer';
+import myReducer, { initState } from './reducer';
 import action$ from './action$';
 
 // START EPICS
 import './epics';
 
+const reducers = [myReducer];
+
+const combinedReducer = (state, action) =>
+  reducers.reduce((state, reducer) => reducer(state, action), state);
+
 const store$ = action$.pipe(
   startWith(initState),
-  scan(reducer),
+  scan(combinedReducer),
   shareReplay(1)
 );
+
+export const injectReducer = reducer => reducers.push(reducer);
 
 export const getState = () => {
   let state;

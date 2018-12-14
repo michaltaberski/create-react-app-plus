@@ -1,5 +1,5 @@
 import Loadable from 'react-loadable';
-import './Collection';
+import './CountersCollection';
 
 export default Loadable({
   loader: () => import('./Rx'),
