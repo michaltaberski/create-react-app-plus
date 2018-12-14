@@ -1,16 +1,5 @@
-import React from 'react';
-import { Subject } from 'rxjs';
-import {
-  startWith,
-  scan,
-  shareReplay,
-  delay,
-  filter,
-  tap
-} from 'rxjs/operators';
 import produce from 'immer';
-
-export const action$ = new Subject();
+import { actionDispatcher } from './action$';
 
 const id = () =>
   Math.random()
@@ -18,8 +7,7 @@ const id = () =>
     .replace(/[^a-z]+/g, '')
     .substr(0, 5);
 
-// Initial State
-const initState = {
+export const initState = {
   text: '',
   counters: [
     { id: id(), count: 0 },
@@ -75,28 +63,6 @@ const reducer = (state, action) => {
   return map.has(action.type) ? map.get(action.type)(state, action) : state;
 };
 
-const clickEpic$ = action$.pipe(
-  filter(action => action.type === 'SET_TEXT'),
-  delay(1000),
-  tap(() => dispatch({ type: 'CLEAR_TEXT' }))
-);
-clickEpic$.subscribe();
-
-export const store$ = action$.pipe(
-  startWith(initState),
-  scan(reducer),
-  shareReplay(1)
-);
-
-// // BASIC LOGGER
-action$.subscribe(state => console.log('A: ', state));
-store$.subscribe(state => console.log('S: ', state));
-
-export const dispatch = action => action$.next(action);
-// Higher order function to send actions to the stream
-export const actionDispatcher = func => (...args) => dispatch(func(...args));
-
-// Example action function
 export const actions = {
   inc: actionDispatcher(id => ({ type: 'INC', payload: { id } })),
   dec: actionDispatcher(id => ({ type: 'DEC', payload: { id } })),
@@ -105,30 +71,4 @@ export const actions = {
   setText: actionDispatcher(text => ({ type: 'SET_TEXT', payload: text }))
 };
 
-const getState = () => {
-  let state;
-  store$.subscribe(_state => (state = _state)).unsubscribe();
-  return state;
-};
-
-export const connectRx = (mapStateToProps = state => state) => {
-  return WrappedComponent => {
-    return class extends React.Component {
-      state = mapStateToProps(getState());
-
-      componentDidMount() {
-        this.subscriber = store$.subscribe(state => {
-          this.setState(mapStateToProps(state));
-        });
-      }
-
-      componentWillUnmount() {
-        this.subscriber.unsubscribe();
-      }
-
-      render() {
-        return <WrappedComponent {...this.props} {...this.state} />;
-      }
-    };
-  };
-};
+export default reducer;

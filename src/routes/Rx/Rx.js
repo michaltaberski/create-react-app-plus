@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { connectRx, actions } from './rxStore';
+import { actions } from './reducer';
+import connectRx from './connectRx';
 
 const Rx = props => (
   <div>
