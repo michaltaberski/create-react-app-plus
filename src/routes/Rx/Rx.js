@@ -1,25 +1,30 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { actions } from './reducer';
-import connectRx from './connectRx';
+import CountersCollection from './CountersCollection';
+import connectCollection from './StreamBackbone/connectCollection';
+
+const countersCollection = new CountersCollection();
+window.countersCollection = countersCollection;
+
+const actions = countersCollection.getActions();
 
 const Rx = props => (
   <div>
     <Helmet title="About" />
     <h1>Rx Page</h1>
     <ul>
-      {props.counters.map(({ id, count }) => (
-        <li key={id}>
-          <small style={{ marginLeft: '10px', color: '#999' }}>#{id}</small>
+      {props.counters.map(({ cid, count }) => (
+        <li key={cid}>
+          <small style={{ marginLeft: '10px', color: '#999' }}>#{cid}</small>
           <h3 style={{ margin: '0 0 15px 0' }}>
             count: {count}
             &nbsp; &nbsp;
-            <button onClick={() => actions.inc(id)}>+</button>
-            <button onClick={() => actions.dec(id)}>-</button>
+            <button onClick={() => actions.inc(cid)}>+</button>
+            <button onClick={() => actions.dec(cid)}>-</button>
             &nbsp; &nbsp;
             <button
               onClick={() =>
-                window.confirm('Are you sure?') && actions.del(id)
+                window.confirm('Are you sure?') && actions.del(cid)
               }>
               DEL
             </button>
@@ -27,7 +32,9 @@ const Rx = props => (
         </li>
       ))}
       <li>
-        <button onClick={() => actions.add()}>ADD</button>
+        <button onClick={() => actions.add([{ count: 0 }, { count: 10 }])}>
+          ADD
+        </button>
       </li>
     </ul>
     <h4>
@@ -40,6 +47,11 @@ const Rx = props => (
   </div>
 );
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => ({
+  counters: state
+});
 
-export default connectRx(mapStateToProps)(Rx);
+export default connectCollection(
+  countersCollection.getStore$(),
+  mapStateToProps
+)(Rx);

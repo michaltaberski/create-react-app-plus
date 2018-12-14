@@ -29,6 +29,18 @@ Collection.extend = (options = {}) => {
   });
 
   return class CollectionClass {
+    getStore$() {
+      return store$;
+    }
+
+    getUpdates$() {
+      return updates$;
+    }
+
+    getActions() {
+      return actions;
+    }
+
     constructor() {
       extend(this, Backbone.Events);
     }
