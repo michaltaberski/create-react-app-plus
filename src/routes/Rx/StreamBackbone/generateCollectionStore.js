@@ -3,9 +3,9 @@ import { generateActionsTypes } from './utils';
 import generateCollectionReducer from './generateCollectionReducer';
 import action$ from '../action$';
 
-const generateCollectionStore = ({ storePath, initState = [] }) => {
-  const ACTIONS_TYPES = Object.values(generateActionsTypes(storePath));
-  const collectionReducer = generateCollectionReducer({ storePath });
+const generateCollectionStore = ({ collectionId, initState = [] }) => {
+  const ACTIONS_TYPES = Object.values(generateActionsTypes(collectionId));
+  const collectionReducer = generateCollectionReducer({ collectionId });
 
   const store$ = action$.pipe(
     filter(action => ACTIONS_TYPES.includes(action.type)),

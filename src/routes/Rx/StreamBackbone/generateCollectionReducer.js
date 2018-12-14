@@ -1,8 +1,8 @@
 import produce from 'immer';
 import { id, generateStorePrefix } from './utils';
 
-const generateCollectionReducer = ({ storePath }) => {
-  const STORE_PREFIX = generateStorePrefix(storePath);
+const generateCollectionReducer = ({ collectionId }) => {
+  const STORE_PREFIX = generateStorePrefix(collectionId);
 
   const add = (state, action) => {
     return produce(state, draft => {

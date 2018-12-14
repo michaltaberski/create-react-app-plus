@@ -3,7 +3,7 @@ import Collection from './StreamBackbone/Collection';
 
 const CountersCollection = Collection.extend({
   store$,
-  storePath: 'counters'
+  collectionId: 'counters'
 });
 
 const countersCollection = new CountersCollection();

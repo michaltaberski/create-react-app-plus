@@ -6,18 +6,18 @@ import generateUpdatesStream from './generateUpdatesStream';
 import { generateGetStateOfStore } from './utils';
 
 const setupCollectionStore = (options = {}) => {
-  const { storePath, initState } = options;
-  const store$ = generateCollectionStore({ storePath, initState });
-  const updates$ = generateUpdatesStream({ storePath, store$ });
-  const actions = generateCollectionActions({ storePath });
+  const { collectionId, initState } = options;
+  const store$ = generateCollectionStore({ collectionId, initState });
+  const updates$ = generateUpdatesStream({ collectionId, store$ });
+  const actions = generateCollectionActions({ collectionId });
   const getState = generateGetStateOfStore(store$);
   return { store$, updates$, actions, getState };
 };
 
 const Collection = {};
 Collection.extend = (options = {}) => {
-  const { storePath } = options;
-  if (!storePath) throw new Error('storePath is not defined');
+  const { collectionId } = options;
+  if (!collectionId) throw new Error('collectionId is not defined');
   const { store$, updates$, actions, getState } = setupCollectionStore(options);
 
   updates$.subscribe(updateAction => {
@@ -43,7 +43,7 @@ Collection.extend = (options = {}) => {
 
     toJSON() {
       const state = getState();
-      return state[storePath];
+      return state[collectionId];
     }
 
     add(objectToAdd) {

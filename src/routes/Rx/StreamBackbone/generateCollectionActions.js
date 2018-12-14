@@ -1,9 +1,9 @@
 import { actionDispatcher } from '../action$';
 import { generateActionsTypes } from './utils';
 
-const generateCollectionActions = ({ storePath }) => {
+const generateCollectionActions = ({ collectionId }) => {
   const actions = {};
-  const actionsTypes = generateActionsTypes(storePath);
+  const actionsTypes = generateActionsTypes(collectionId);
 
   actions.add = actionDispatcher((modelsData = []) => ({
     type: actionsTypes.add,

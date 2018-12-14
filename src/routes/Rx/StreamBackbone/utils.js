@@ -1,7 +1,7 @@
-export const generateStorePrefix = storePath => storePath.toUpperCase();
+export const generateStorePrefix = collectionId => collectionId.toUpperCase();
 
-export const generateActionsTypes = storePath => {
-  const STORE_PREFIX = generateStorePrefix(storePath);
+export const generateActionsTypes = collectionId => {
+  const STORE_PREFIX = generateStorePrefix(collectionId);
   return {
     add: `${STORE_PREFIX}_ADD`
   };

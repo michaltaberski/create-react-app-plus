@@ -3,8 +3,8 @@ import { filter, withLatestFrom, map } from 'rxjs/operators';
 
 import action$ from '../action$';
 
-const generateUpdatesStream = ({ storePath, store$ }) => {
-  const ACTIONS_TYPES = Object.values(generateActionsTypes(storePath));
+const generateUpdatesStream = ({ collectionId, store$ }) => {
+  const ACTIONS_TYPES = Object.values(generateActionsTypes(collectionId));
   return action$.pipe(
     filter(action => ACTIONS_TYPES.includes(action.type)),
     withLatestFrom(store$),
