@@ -1,16 +1,22 @@
 import { actionDispatcher } from '../action$';
 import { generateActionsTypes } from './utils';
 
-const generateCollectionActions = ({ collectionId }) => {
-  const actions = {};
-  const actionsTypes = generateActionsTypes(collectionId);
-
-  actions.add = actionDispatcher((modelsData = []) => ({
-    type: actionsTypes.add,
-    payload: modelsData
+const generateAction = actionType =>
+  actionDispatcher((payload, meta = {}) => ({
+    type: actionType,
+    payload,
+    meta
   }));
 
-  return actions;
+const generateCollectionActions = ({ collectionId }) => {
+  const actionsTypes = generateActionsTypes(collectionId);
+  return Object.entries(actionsTypes).reduce(
+    (acc, [actionName, actionType]) => {
+      acc[actionName] = generateAction(actionType);
+      return acc;
+    },
+    {}
+  );
 };
 
 export default generateCollectionActions;

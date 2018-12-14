@@ -3,7 +3,9 @@ export const generateStorePrefix = collectionId => collectionId.toUpperCase();
 export const generateActionsTypes = collectionId => {
   const STORE_PREFIX = generateStorePrefix(collectionId);
   return {
-    add: `${STORE_PREFIX}_ADD`
+    add: `${STORE_PREFIX}_ADD`,
+    remove: `${STORE_PREFIX}_REMOVE`,
+    reset: `${STORE_PREFIX}_RESET`
   };
 };
 
@@ -13,8 +15,7 @@ export const generateGetStateOfStore = store$ => () => {
   return state;
 };
 
-export const id = (length = 5) =>
+export const cid = () =>
   Math.random()
     .toString(36)
-    .replace(/[^a-z]+/g, '')
-    .substr(0, length);
+    .substr(2, 10);

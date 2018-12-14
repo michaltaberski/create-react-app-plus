@@ -1,12 +1,12 @@
 import produce from 'immer';
-import { id, generateStorePrefix } from './utils';
+import { cid, generateStorePrefix } from './utils';
 
 const generateCollectionReducer = ({ collectionId }) => {
   const STORE_PREFIX = generateStorePrefix(collectionId);
 
   const add = (state, action) => {
     return produce(state, draft => {
-      draft.push(...action.payload.map(model => ({ id: id(), ...model })));
+      draft.push(...action.payload.map(model => ({ cid: cid(), ...model })));
     });
   };
 
