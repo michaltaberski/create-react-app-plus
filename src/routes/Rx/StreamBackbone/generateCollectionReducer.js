@@ -6,9 +6,7 @@ const generateCollectionReducer = ({ storePath }) => {
 
   const add = (state, action) => {
     return produce(state, draft => {
-      draft[storePath].push(
-        ...action.payload.map(model => ({ id: id(), ...model }))
-      );
+      draft.push(...action.payload.map(model => ({ id: id(), ...model })));
     });
   };
 

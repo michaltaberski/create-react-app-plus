@@ -1,27 +1,31 @@
 import Backbone from 'backbone';
 import { extend } from 'underscore';
-import { getState, injectReducer } from '../store$';
 import generateCollectionActions from './generateCollectionActions';
-import generateCollectionReducer from './generateCollectionReducer';
+import generateCollectionStore from './generateCollectionStore';
 import generateUpdatesStream from './generateUpdatesStream';
+import { generateGetStateOfStore } from './utils';
 
 const setupCollectionStore = (options = {}) => {
-  const { storePath } = options;
-  injectReducer(generateCollectionReducer({ storePath }));
+  const { storePath, initState } = options;
+  const store$ = generateCollectionStore({ storePath, initState });
+  const updates$ = generateUpdatesStream({ storePath, store$ });
   const actions = generateCollectionActions({ storePath });
-  const updates$ = generateUpdatesStream({ storePath });
-  return { actions, updates$ };
+  const getState = generateGetStateOfStore(store$);
+  return { store$, updates$, actions, getState };
 };
 
 const Collection = {};
 Collection.extend = (options = {}) => {
-  const { store$, storePath } = options;
-  if (!store$) throw new Error('store$ is not defined');
+  const { storePath } = options;
   if (!storePath) throw new Error('storePath is not defined');
-  const { actions, updates$ } = setupCollectionStore(options);
+  const { store$, updates$, actions, getState } = setupCollectionStore(options);
 
   updates$.subscribe(updateAction => {
     console.log('updateAction: ', updateAction);
+  });
+
+  store$.subscribe(state => {
+    console.log('COLLECTION STORE UPDATE', state);
   });
 
   return class CollectionClass {

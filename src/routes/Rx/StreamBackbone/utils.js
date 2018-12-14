@@ -7,6 +7,12 @@ export const generateActionsTypes = storePath => {
   };
 };
 
+export const generateGetStateOfStore = store$ => () => {
+  let state;
+  store$.subscribe(_state => (state = _state)).unsubscribe();
+  return state;
+};
+
 export const id = (length = 5) =>
   Math.random()
     .toString(36)
