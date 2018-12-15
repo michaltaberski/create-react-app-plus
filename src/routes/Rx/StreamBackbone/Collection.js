@@ -3,11 +3,15 @@ import { extend } from 'underscore';
 import generateCollectionActions from './generateCollectionActions';
 import generateCollectionStore from './generateCollectionStore';
 import generateUpdatesStream from './generateUpdatesStream';
-import { generateGetStateOfStore } from './utils';
+import {
+  generateGetStateOfStore,
+  mapUpdateActionToEvent,
+  findCid
+} from './utils';
 
 const setupCollectionStore = (options = {}) => {
-  const { collectionId, initState } = options;
-  const store$ = generateCollectionStore({ collectionId, initState });
+  const { collectionId } = options;
+  const store$ = generateCollectionStore({ collectionId });
   const updates$ = generateUpdatesStream({ collectionId, store$ });
   const actions = generateCollectionActions({ collectionId });
   const getState = generateGetStateOfStore(store$);
@@ -43,6 +47,12 @@ Collection.extend = (options = {}) => {
 
     constructor() {
       extend(this, Backbone.Events);
+      updates$.subscribe(updateAction => {
+        const [eventName, eventPayload] = mapUpdateActionToEvent(updateAction, {
+          collectionId
+        });
+        this.trigger(eventName, eventPayload);
+      });
     }
 
     clone() {
@@ -54,8 +64,7 @@ Collection.extend = (options = {}) => {
     }
 
     toJSON() {
-      const state = getState();
-      return state[collectionId];
+      return getState();
     }
 
     add(objectToAdd) {
@@ -64,22 +73,31 @@ Collection.extend = (options = {}) => {
 
     push(model) {
       actions.add([model]);
-      this.trigger('add');
     }
 
     set(models = []) {
       actions.set(models);
     }
 
+    remove(cidOrIdOrModel) {
+      actions.remove(findCid(cidOrIdOrModel, getState()));
+    }
+
+    reset() {
+      actions.reset();
+    }
+
+    get(cidOrIdOrModel) {
+      const state = getState();
+      const cid = findCid(cidOrIdOrModel, state);
+      return state.data[cid];
+    }
     // – model
     // – modelId
     // – constructor / initialize
     // – models
     // – sync
     // – Underscore Methods (46)
-    // – add
-    // – remove
-    // – reset
     // – get
     // – at
     // – pop

@@ -1,5 +1,5 @@
 import { actionDispatcher } from '../action$';
-import { generateActionsTypes } from './utils';
+import { generateActionsTypesMap } from './utils';
 
 const generateAction = actionType =>
   actionDispatcher((payload, meta = {}) => ({
@@ -9,8 +9,8 @@ const generateAction = actionType =>
   }));
 
 const generateCollectionActions = ({ collectionId }) => {
-  const actionsTypes = generateActionsTypes(collectionId);
-  return Object.entries(actionsTypes).reduce(
+  const actionsTypesMap = generateActionsTypesMap(collectionId);
+  return Object.entries(actionsTypesMap).reduce(
     (acc, [actionName, actionType]) => {
       acc[actionName] = generateAction(actionType);
       return acc;

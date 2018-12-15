@@ -4,6 +4,14 @@ import CountersCollection from './CountersCollection';
 import connectCollection from './StreamBackbone/connectCollection';
 
 const countersCollection = new CountersCollection();
+countersCollection.on('add', () => {
+  console.log('element has been added to the collection');
+});
+
+countersCollection.on('remove', () => {
+  console.log('element has been deleted from the collection');
+});
+
 window.countersCollection = countersCollection;
 
 const actions = countersCollection.getActions();
@@ -24,7 +32,7 @@ const Rx = props => (
             &nbsp; &nbsp;
             <button
               onClick={() =>
-                window.confirm('Are you sure?') && actions.del(cid)
+                window.confirm('Are you sure?') && actions.remove([cid])
               }>
               DEL
             </button>
@@ -32,9 +40,7 @@ const Rx = props => (
         </li>
       ))}
       <li>
-        <button onClick={() => actions.add([{ count: 0 }, { count: 10 }])}>
-          ADD
-        </button>
+        <button onClick={() => actions.add([{ count: 0 }])}>ADD</button>
       </li>
     </ul>
     <h4>
@@ -48,7 +54,7 @@ const Rx = props => (
 );
 
 const mapStateToProps = state => ({
-  counters: state
+  counters: Object.values(state.data)
 });
 
 export default connectCollection(
